@@ -1,0 +1,1 @@
+A simple Encryptation java class that, generates a key based on a authentication password, that can be used to encrypt and decrypt messages.
