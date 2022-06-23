@@ -1,54 +1,57 @@
 
 public final class Encrypt {
 
-    private final static int passwordSize = 128;
+    // This value can be customized to generate longer key size
+    private final static int keySize = 32;
 
     private Encrypt() {};
 
 
-    public final static String encrypt(String frase, String password) {
-        return convertMessage(frase, password, true);
+    public final static String encrypt(String MSG, String password) {
+        return convert(MSG, password, true);
     }
 
-    public final static String decrypt(String frase, String password) {
-        return convertMessage(frase, password, false);
+    public final static String decrypt(String MSG, String password) {
+        return convert(MSG, password, false);
     }
 
 
-    private synchronized static String convertMessage(String frase, String authentication, boolean toDecrypt) {
+    /** Method that converts a message using a key (provided the authentication) */
+    private synchronized static String convert(String MSG, String authentication, boolean toDecrypt) {
         try {Thread.sleep(100);} catch (InterruptedException e) {}
-        if (frase == null || authentication == null || frase.length() == 0 || authentication.length() == 0)
-            throw new ArithmeticException("Couldn't convert the message");
-        char[] fraseToBeConverted = frase.toCharArray();
-        char[] keyAt = generateKey(authentication);
-        for (int i=0; i<fraseToBeConverted.length; i++) {
-            int caracter = fraseToBeConverted[i];
+        if (MSG == null || authentication == null || MSG.length() == 0 || authentication.length() == 0)
+            throw new ArithmeticException("Message couldn't be converted");
+        char[] convertedMSG = MSG.toCharArray();
+        char[] keyAt = (generateKey(authentication)).toCharArray();
+        for (int i=0; i<convertedMSG.length; i++) {
+            int character = convertedMSG[i];
             int key = keyAt[i%keyAt.length];
-            if (toDecrypt == true) {
-                fraseToBeConverted[i] = (char) (caracter + key);
-            } else {
-                fraseToBeConverted[i] = (char) (caracter - key);
-            }
+            if (toDecrypt == true)
+                convertedMSG[i] = (char) (character + key);
+            else
+                convertedMSG[i] = (char) (character - key);
         }
-        return String.valueOf(fraseToBeConverted);
+        return String.valueOf(convertedMSG);
     }
 
 
-
-    /** Generates a 512 digits password long using the input Authentication (password) 
-     *  @return key in char[]*/
-    public synchronized final static char[] generateKey(String password) {
-        char[] enlongedPassword = new char[passwordSize];
-        int aux;
-        for (int i = 0; i < passwordSize; i++) {
-            int key1 = i + i/3 + i%2 + password.length() + passwordSize;
-            int key2 = password.charAt(i%password.length()) *2;
-            aux = incrementalSwitch(key1, key2, i);
-            for (int j = 0; j < password.length() * 2 / 3; j++) {
-                int key3 = password.charAt((i + j)%password.length()) * 3  -  47  +  i  +  password.length()  +  password.length()/2;
-                int key4 = password.charAt(Math.abs((password.length()-(i+j)))%password.length()) * 4  -  56  +  j;
-                int key5 = password.charAt((password.length()/2+(i+j)) % password.length()) * 5  +  89  +  i*j;
-                int key6 = i*j + j + j/3 + j%2 - passwordSize*2;
+// 2000
+    /** Generates a key using the input Authentication (password) */
+    public synchronized final static String generateKey(String password) {
+        char[] enlongedPassword = new char[keySize];
+        int aux = 0;
+        int len = password.length();
+        for (int i = 0; i < keySize; i++) {
+            int key1 = password.charAt(i%len) * 2 + 13;
+            int key2 = i + i/3 + i%2 + len + keySize + 17;
+            aux = aux % keySize;
+            aux = incrementalSwitch(aux, key1, i);
+            aux = incrementalSwitch(aux, key2, i);
+            for (int j = 0; j < len; j++) {
+                int key3 = password.charAt((i+j)%len) * 3 + i + len - 47;
+                int key4 = password.charAt(Math.abs((len-(i+j)))%len) * 4 + j - 56;
+                int key5 = password.charAt((len/2+(i+j)) % len) * 5 -89 + (i+len*j)%(keySize);
+                int key6 = i + j + i*j + j/3 + j%2 - keySize - 111;
                 aux = incrementalSwitch(aux, key3, i);
                 aux = incrementalSwitch(aux, key4, j);
                 aux = incrementalSwitch(aux, key5, i);
@@ -56,12 +59,7 @@ public final class Encrypt {
             }
             enlongedPassword[i] = convertToChar(aux);
         }
-        return enlongedPassword;
-    }
-
-
-    public synchronized final static String generatekeyString(String password) {
-        return String.valueOf(generateKey(password));
+        return String.valueOf(enlongedPassword);
     }
 
 
