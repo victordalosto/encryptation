@@ -7,13 +7,15 @@ public final class Encrypt {
     private Encrypt() {};
 
 
-    public final static String encrypt(String MSG, String password) {
-        return convert(MSG, password, true);
+    public final static String encrypt(String MSG, String authentication) {
+        return convert(MSG, authentication, true);
     }
 
-    public final static String decrypt(String MSG, String password) {
-        return convert(MSG, password, false);
+    
+    public final static String decrypt(String MSG, String authentication) {
+        return convert(MSG, authentication, false);
     }
+
 
 
     /** Method that converts a message using a key (provided the authentication) */
@@ -35,7 +37,7 @@ public final class Encrypt {
     }
 
 
-// 2000
+
     /** Generates a key using the input Authentication (password) */
     public synchronized final static String generateKey(String password) {
         char[] enlongedPassword = new char[keySize];
