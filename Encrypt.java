@@ -8,27 +8,35 @@ public final class Encrypt {
 
 
     public final static String encrypt(String MSG, String authentication) {
-        return convert(MSG, authentication, true);
+        return convert(MSG, authentication, Encoding.ENCRYPT);
     }
 
     
     public final static String decrypt(String MSG, String authentication) {
-        return convert(MSG, authentication, false);
+        return convert(MSG, authentication, Encoding.DECRYPT);
+    }
+
+    
+    public final static String decryptUsingKey(String MSG, String key) {
+        return convert(MSG, key, Encoding.KEY_DECRYPT);
     }
 
 
-
     /** Method that converts a message using a key (provided the authentication) */
-    private synchronized static String convert(String MSG, String authentication, boolean toDecrypt) {
+    private synchronized static String convert(String MSG, String authentication, Encoding Encoding) {
         try {Thread.sleep(100);} catch (InterruptedException e) {}
         if (MSG == null || authentication == null || MSG.length() == 0 || authentication.length() == 0)
             throw new ArithmeticException("Message couldn't be converted");
         char[] convertedMSG = MSG.toCharArray();
-        char[] keyAt = (generateKey(authentication)).toCharArray();
+        char[] keyAt;
+        if (!Encoding.equals(Encrypt.Encoding.KEY_DECRYPT))
+            keyAt = (generateKey(authentication)).toCharArray();
+        else
+            keyAt = authentication.toCharArray();
         for (int i=0; i<convertedMSG.length; i++) {
             int character = convertedMSG[i];
             int key = keyAt[i%keyAt.length];
-            if (toDecrypt == true)
+            if (Encoding.equals(Encrypt.Encoding.ENCRYPT))
                 convertedMSG[i] = (char) (character + key);
             else
                 convertedMSG[i] = (char) (character - key);
@@ -39,7 +47,7 @@ public final class Encrypt {
 
 
     /** Generates a key using the input Authentication (password) */
-    public synchronized final static String generateKey(String password) {
+    public final static String generateKey(String password) {
         char[] enlongedPassword = new char[keySize];
         int aux = 0;
         int len = password.length();
@@ -88,5 +96,10 @@ public final class Encrypt {
             value += (97 - 36);
         }
         return (char) value;
+    }
+
+
+    enum Encoding {
+        ENCRYPT, DECRYPT, KEY_DECRYPT
     }
 }

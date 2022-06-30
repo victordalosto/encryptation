@@ -11,8 +11,7 @@ public class Teste {
         System.out.println(" Generated key: " + Encrypt.generateKey(authentication) + "\n");
         System.out.println(" Encrypted MSG: " + Encrypt.encrypt(MSG, authentication));
         System.out.println(" Decrypted MSG: " + Encrypt.decrypt(Encrypt.encrypt(MSG, authentication), authentication) + "\n");
+        System.out.println(" Decryption using Key : " + Encrypt.decryptUsingKey(Encrypt.encrypt(MSG, authentication), Encrypt.generateKey(authentication)) + "\n");
 
-        
     }
-    
 }
