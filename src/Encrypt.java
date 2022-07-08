@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 public final class Encrypt {
 
     // This value can be customized to generate longer key size
-    private final static int keySize = 50;
+    private final static int keySize = 52;
 
     private enum Encoding {
         ENCRYPT, DECRYPT, KEY_DECRYPT
@@ -42,44 +42,29 @@ public final class Encrypt {
     
 
     public final static void decryptFile(String path, String authentication) {
-        String outputPath = path.replace("_Encrypted", "") + "_Decrypted";
-        HandleFile(path, outputPath, authentication, Encoding.DECRYPT);
+        String outputPath = path + "_Decrypted";
+        HandleFile(path + "_Encrypted", outputPath, authentication, Encoding.DECRYPT);
     }
 
 
     private final static void HandleFile(String inPath, String outPath, String authentication, Encoding encodingType) {
-        String line;
+        String line = "";
         StringBuffer sb = new StringBuffer();
         try (BufferedReader reader = new BufferedReader(new FileReader(inPath, StandardCharsets.UTF_8));
              PrintWriter writer = new PrintWriter(new FileWriter(outPath, StandardCharsets.UTF_8));) {
             while ((line = reader.readLine()) != null) {
-                if (encodingType.equals(Encoding.ENCRYPT))
-                    line += System.lineSeparator();
-                // if (encodingType.equals(Encoding.ENCRYPT))
-                //     line = encrypt(line, authentication);
-                // else 
-                //     line = decrypt(line, authentication);
-                sb.append(line);
+                sb.append(line + System.lineSeparator());
             }
-            String flushLine = "";
-            for (int i=0; i<sb.length()+keySize; i += keySize) {
-                flushLine = "";
-                for (int j=i; j<Math.min(i+keySize, sb.length()-1); j++) {
-                    flushLine += sb.charAt(j);
-                    System.out.print(j + ", ");
-                }
-                writer.print(flushLine);
-                System.out.println("\n" + "i:" + i + " - size: " + sb.length() + " [" + (i+keySize) + ", " + (sb.length()-1) + "] - " + (Math.min((i+keySize), (sb.length()-i))));
+            if (encodingType.equals(Encoding.ENCRYPT))
+                line = encrypt(sb.toString(), authentication);
+            else {
+                sb.setLength(sb.length()-System.lineSeparator().length());
+                line = decrypt(sb.toString(), authentication);
             }
-            writer.print(flushLine);
+            writer.print(line);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-
-    private final static String flushStringBuffer(StringBuffer sb, Encoding encodingType) {
-        return "";
     }
 
 
