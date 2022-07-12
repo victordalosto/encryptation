@@ -15,9 +15,9 @@ public class Test {
         // ===== Encryption using plain Text ===== //
         System.out.println("Authentication: " + authentication);
         System.out.println("Generated key: " + Encrypt.generateKey(authentication));
-        System.out.println("Encrypted MSG: " + Encrypt.encrypt(MSG, authentication));
-        System.out.println("Decrypted MSG: " + Encrypt.decrypt(Encrypt.encrypt(MSG, authentication), authentication));
-        System.out.println("Decryption using Key : " + Encrypt.decryptUsingKey(Encrypt.encrypt(MSG, authentication), Encrypt.generateKey(authentication)) + "\n");
+        System.out.println("Encrypted MSG: " + Encrypt.encryptMSG(MSG, authentication));
+        System.out.println("Decrypted MSG: " + Encrypt.decryptMSG(Encrypt.encryptMSG(MSG, authentication), authentication));
+        System.out.println("Decryption using Key : " + Encrypt.decryptMSGUsingKey(Encrypt.encryptMSG(MSG, authentication), Encrypt.generateKey(authentication)) + "\n");
 
         // ===== Encryption using whole ASCII files ===== //
         System.out.println("Encrypting text file in assets directory");
