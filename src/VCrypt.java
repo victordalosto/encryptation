@@ -8,16 +8,19 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-public final class Encrypt {
+public final class VCrypt {
 
     // This value can be customized to generate longer key size
     private final static int keySize = 64;
 
+    
     private enum Encoding {
         ENCRYPT, DECRYPT, KEY_DECRYPT
     }
 
-    private Encrypt() {};
+    private VCrypt() {};
+
+
 
 
     /** Encrypt a MSG using a authentication password */
@@ -83,7 +86,7 @@ public final class Encrypt {
                 aux = incrementalSwitch(aux, key8, j);
                 aux = incrementalSwitch(aux, key9, j);
             }
-            enlongedPassword[i] = convertToChar(aux);
+            enlongedPassword[i] = Conversion.convertToChar(aux);
         }
         return String.valueOf(enlongedPassword);
     }
@@ -155,12 +158,4 @@ public final class Encrypt {
     }
 
 
-
-    /** Converts an int to a char in the ASCI Table. */
-    private static char convertToChar(int value) {
-        int range = 94;
-        value = Math.abs(value)%range;
-        value = value + 33;
-        return (char) value;
-    }
 }
