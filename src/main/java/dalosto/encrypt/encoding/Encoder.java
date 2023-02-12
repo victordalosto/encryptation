@@ -7,10 +7,15 @@ public final class Encoder {
     private final static int keySize = 116;
 
 
-    final static boolean matches(char[] password, char[] encodedPassword) {
+    protected final static boolean matches(char[] password, char[] encodedPassword) {
         char[] salt = ConversionService.getSaltFromString(encodedPassword);
-        char[] pass = encode(password, salt);
-        return encodedPassword.equals(pass);
+        char[] newEncodedPassword = encode(password, salt);
+        return new String(encodedPassword).equals(new String(newEncodedPassword));
+    }
+
+    
+    public final static char[] encode(char[] password) {
+        return encode(password, Salt.generateSalt());
     }
 
 

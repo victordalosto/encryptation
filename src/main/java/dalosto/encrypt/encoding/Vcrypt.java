@@ -5,13 +5,13 @@ public final class Vcrypt {
 
     /** Encode the raw password */
     public final static String encode(String password) {
-        return Encoder.encode(password.toCharArray(), Salt.generateSalt()).toString();
+        return new String(Encoder.encode(password.toCharArray()));
     }
 
 
     /** Returns a encoded hash in the format: {hashSalt}hashPassword */
     public final static String encodeUsingSalt(String password, String salt) {
-        return Encoder.encode(password.toCharArray(), salt.toCharArray()).toString();
+        return new String(Encoder.encode(password.toCharArray(), salt.toCharArray()).toString());
     }
 
 

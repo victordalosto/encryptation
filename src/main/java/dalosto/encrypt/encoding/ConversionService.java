@@ -37,7 +37,7 @@ public final class ConversionService {
 
 
     protected final static char[] getSaltFromString(char[] encodedPassword) {
-        return encodedPassword.toString().split("}")[0].replace("{", "").toCharArray();
+        return new String(encodedPassword).split("}")[0].replace("{", "").toCharArray();
     }
 
 }
