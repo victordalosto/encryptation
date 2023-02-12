@@ -1,10 +1,10 @@
-package dalosto.encrypt.encoding;
+package dalosto.encrypt;
 
 public final class Encoder {
 
     private Encoder() {throw new RuntimeException();}
 
-    private final static int keySize = 116;
+    private final static int keySize = 128;
 
 
     protected final static boolean matches(char[] password, char[] encodedPassword) {

@@ -1,4 +1,4 @@
-package dalosto.encrypt.encoding;
+package dalosto.encrypt;
 
 
 public final class ConversionService {

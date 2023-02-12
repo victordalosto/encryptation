@@ -1,4 +1,4 @@
-package dalosto.encrypt.encoding;
+package dalosto.encrypt;
 import java.security.SecureRandom;
 import java.util.Random;
 

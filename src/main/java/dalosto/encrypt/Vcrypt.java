@@ -1,4 +1,4 @@
-package dalosto.encrypt.encoding;
+package dalosto.encrypt;
 
 
 public final class Vcrypt {
@@ -9,7 +9,7 @@ public final class Vcrypt {
     }
 
 
-    /** Returns a encoded hash in the format: {hashSalt}hashPassword */
+    /** Returns an encoded hash in the format: {hashSalt}hashPassword */
     public final static String encodeUsingSalt(String password, String salt) {
         return new String(Encoder.encode(password.toCharArray(), salt.toCharArray()).toString());
     }
