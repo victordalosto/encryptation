@@ -1,7 +1,12 @@
 ## Vcrypt
 A simple Java Library that provides Encryptation functionalities for casual purposes.
 
-All the implementations are made through the <b>dalosto.encode.Vcrypt</b> Class, providing:
+All the implementations are made through the <b>dalosto.Vcrypt</b>.<p>
+Simple use:
+```java
+Vcrypt vcrypt = new ImpVcrypt()
+```
+</br>Interface methods:
 
 ```java
 /** Encode the raw password */
@@ -13,6 +18,7 @@ String encodeUsingSalt(String password, String salt);
 /** Verify if the password after encoded matches the encodedpassword*/
 boolean matches(String password, String encodedPassword);
 ```
+
 
 The program allows for easy change of key size and salt size.
 
