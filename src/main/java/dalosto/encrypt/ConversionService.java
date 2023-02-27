@@ -14,8 +14,7 @@ public final class ConversionService {
      * @return  char in the ASCII table from: 33 to 122;
     */
     protected final static char convertToChar(int value) {
-        value = Math.abs(value) % range;
-        value = value + 33;
+        value = 33 + (Math.abs(value) % range);
         return (char) value;
     }
 
@@ -36,7 +35,8 @@ public final class ConversionService {
     }
 
 
-    protected final static char[] getSaltFromString(char[] encodedPassword) {
+    
+    protected final static char[] getSaltFromEncodedPassword(char[] encodedPassword) {
         return new String(encodedPassword).split("}")[0].replace("{", "").toCharArray();
     }
 

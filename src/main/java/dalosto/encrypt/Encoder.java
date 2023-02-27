@@ -8,14 +8,14 @@ public final class Encoder {
 
 
     protected final static boolean matches(char[] password, char[] encodedPassword) {
-        char[] salt = ConversionService.getSaltFromString(encodedPassword);
+        char[] salt = ConversionService.getSaltFromEncodedPassword(encodedPassword);
         char[] newEncodedPassword = encode(password, salt);
-        return new String(encodedPassword).equals(new String(newEncodedPassword));
+        return (new String(encodedPassword).equals(new String(newEncodedPassword)));
     }
 
     
     public final static char[] encode(char[] password) {
-        return encode(password, Salt.generateSalt());
+        return encode(password, Salt.generateNewSalt());
     }
 
 

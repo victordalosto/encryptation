@@ -1,22 +1,27 @@
 package dalosto.encrypt;
 
+import dalosto.Vcrypt;
 
-public final class Vcrypt {
 
+public class VcryptImp implements Vcrypt {
+
+    public VcryptImp() {}
+
+    
     /** Encode the raw password */
-    public final static String encode(String password) {
+    public final String encode(String password) {
         return new String(Encoder.encode(password.toCharArray()));
     }
 
 
     /** Returns an encoded hash in the format: {hashSalt}hashPassword */
-    public final static String encodeUsingSalt(String password, String salt) {
+    public final String encodeUsingSalt(String password, String salt) {
         return new String(Encoder.encode(password.toCharArray(), salt.toCharArray()).toString());
     }
 
 
-    /** Verify if the password after encoded matches the encodedpassword*/
-    public final static boolean matches(String password, String encodedPassword) {
+    /** Verify if the password after encoding matches the encodedpassword*/
+    public final boolean matches(String password, String encodedPassword) {
         return Encoder.matches(password.toCharArray(), encodedPassword.toCharArray());
     }
     

@@ -16,7 +16,7 @@ public class UniqueValuesTest {
     public void shouldGenerateUniqueSalts() {
         List<String> listSalts = new ArrayList<>();
         for (int i=0; i<size; i++) {
-            String tmp = new String(Salt.generateSalt());
+            String tmp = new String(Salt.generateNewSalt());
             assertTrue(!containsInList(listSalts, tmp));
             listSalts.add(tmp);
         }
@@ -42,7 +42,7 @@ public class UniqueValuesTest {
         List<String> listPasswords = new ArrayList<>();
         char[] pass = "12345".toCharArray();
         for (int i=0; i<size; i++) {
-            char[] tmpSalt = Salt.generateSalt();
+            char[] tmpSalt = Salt.generateNewSalt();
             String tmp = new String(Encoder.encode(pass, tmpSalt));
             assertTrue(!containsInList(listPasswords, tmp));
             listPasswords.add(tmp);
@@ -54,7 +54,7 @@ public class UniqueValuesTest {
     @Test
     public void shouldGenerateSamePasswordUsingSameSalt() {
         char[] pass = "12345".toCharArray();
-        char[] salt = Salt.generateSalt();
+        char[] salt = Salt.generateNewSalt();
         char[] encodedPass = Encoder.encode(pass, salt);
         for (int i=0; i<size; i++) {
             char[] tmp = Encoder.encode(pass, salt);
@@ -67,7 +67,7 @@ public class UniqueValuesTest {
     @Test
     public void shouldMatchRightPasswords() {
         char[] pass = "12345".toCharArray();
-        char[] salt = Salt.generateSalt();
+        char[] salt = Salt.generateNewSalt();
         char[] encodedPass = Encoder.encode(pass, salt);
         assertTrue(Encoder.matches(pass, encodedPass));
     }
@@ -77,7 +77,7 @@ public class UniqueValuesTest {
     @Test
     public void shouldNotMatchWrongPasswords() {
         char[] pass = "12345".toCharArray();
-        char[] salt = Salt.generateSalt();
+        char[] salt = Salt.generateNewSalt();
         char[] encodedPass = Encoder.encode(pass, salt);
         assertFalse(Encoder.matches("123456".toCharArray(), encodedPass));
     }
