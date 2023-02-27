@@ -3,9 +3,9 @@ package dalosto.encrypt;
 import dalosto.Vcrypt;
 
 
-public class VcryptImp implements Vcrypt {
+public class ImpVcrypt implements Vcrypt {
 
-    public VcryptImp() {}
+    public ImpVcrypt() {}
 
     
     /** Encode the raw password */

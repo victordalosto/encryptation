@@ -3,7 +3,7 @@ package dalosto.encrypt;
 
 public final class ConversionService {
 
-    private ConversionService() {throw new RuntimeException();}
+    private ConversionService() {throw new RuntimeException("Cant instantiate this class");}
 
     private static final int range = 90;
 

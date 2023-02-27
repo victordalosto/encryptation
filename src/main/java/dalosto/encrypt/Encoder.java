@@ -2,7 +2,7 @@ package dalosto.encrypt;
 
 public final class Encoder {
 
-    private Encoder() {throw new RuntimeException();}
+    private Encoder() {throw new RuntimeException("Cant instantiate this class");}
 
     private final static int keySize = 128;
 

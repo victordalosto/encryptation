@@ -5,7 +5,7 @@ import java.util.Random;
 
 public final class Salt {
 
-    private Salt() {throw new RuntimeException();}
+    private Salt() {throw new RuntimeException("Cant instantiate this class");}
 
     private final static int saltSize = 32;
     private final static Random random = new SecureRandom();
